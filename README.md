@@ -23,21 +23,21 @@
             - [1.3.5.4. 带虚拟节点的一致性Hash](#1354-带虚拟节点的一致性hash)
             - [1.3.5.5. 分片](#1355-分片)
             - [1.3.5.6. CRUSH算法](#1356-crush算法)
-            - [1.3.5.7. 一种分布式存储系统：Ceph](#1357-一种分布式存储系统ceph)
-        - [1.3.6. Ceph核心组件及概念介绍](#136-ceph核心组件及概念介绍)
-            - [1.3.6.1. Monitor](#1361-monitor)
-            - [1.3.6.2. OSD](#1362-osd)
-            - [1.3.6.3. MDS](#1363-mds)
-            - [1.3.6.4. Object](#1364-object)
-            - [1.3.6.5. PG](#1365-pg)
-            - [1.3.6.6. OSDMap](#1366-osdmap)
-            - [1.3.6.7. RADOS](#1367-rados)
-            - [1.3.6.8. Libradio](#1368-libradio)
-            - [1.3.6.9. CRUSH](#1369-crush)
-            - [1.3.6.10. RBD](#13610-rbd)
-            - [1.3.6.11. RGW](#13611-rgw)
-            - [1.3.6.12. CephFS](#13612-cephfs)
-        - [1.3.7. 数据库](#137-数据库)
+        - [1.3.6. 一种分布式存储系统：Ceph](#136-一种分布式存储系统ceph)
+        - [1.3.7. Ceph核心组件及概念介绍](#137-ceph核心组件及概念介绍)
+            - [1.3.7.1. Monitor](#1371-monitor)
+            - [1.3.7.2. OSD](#1372-osd)
+            - [1.3.7.3. MDS](#1373-mds)
+            - [1.3.7.4. Object](#1374-object)
+            - [1.3.7.5. PG](#1375-pg)
+            - [1.3.7.6. OSDMap](#1376-osdmap)
+            - [1.3.7.7. RADOS](#1377-rados)
+            - [1.3.7.8. Libradio](#1378-libradio)
+            - [1.3.7.9. CRUSH](#1379-crush)
+            - [1.3.7.10. RBD](#13710-rbd)
+            - [1.3.7.11. RGW](#13711-rgw)
+            - [1.3.7.12. CephFS](#13712-cephfs)
+        - [1.3.8. 数据库](#137-数据库)
     - [1.4. 立项依据](#14-立项依据)
         - [1.4.1. Ceph的优点：高性能、高可扩展性、高可用性、特性丰富](#141-ceph的优点高性能高可扩展性高可用性特性丰富)
             - [1.4.1.1. CRUSH算法](#1411-crush算法)
@@ -170,39 +170,39 @@ CRUSH 算法本质上也是一种基于分片的数据分布方式，其试图�
 -  分片映射信息量：避免中心目录服务和存储节点及客户端之间交互大量的分片映射信息，而改由存储节点或客户端自己根据 少量且稳定的集群节点拓扑和确定的规则自己计算分片映射。  
 -  完善的故障域划分：支持层级的故障域控制将同一分片的不同副本按照配置划分到不同层级的故障域中。客户端 或存储节点利用 key 、存储节点的拓扑结构和分配算法，独立的进行分片位置的计算，得到一组负责对应分片及副本的存储位置。
  
-#### 1.3.5.7. 一种分布式存储系统：Ceph
+### 1.3.6. 一种分布式存储系统：Ceph
 Ceph起源于Sage Well在UCSC就读博士期间，它是一种针对性能、可靠性和可扩展性而设计的分布式存储系统，并为对象存储、块存储和文件存储提供接口。Ceph的主要目标完全分布式操作，消除单点故障（Single Point of Failure），同时可扩展到EB（1EB=1048576TB）级别。
 
 
-### 1.3.6. Ceph核心组件及概念介绍
-#### 1.3.6.1. Monitor
+### 1.3.7. Ceph核心组件及概念介绍
+#### 1.3.7.1. Monitor
  一个Ceph集群需要多个Monitor组成的小集群，它们通过Paxos同步数据，用来保存OSD的元数据。
 
 Monitor的主要任务就是维护集群视图的一致性，在维护一致性的时候使用了Paxos协议，并将其实例化到数据库中，方便后续的访问。所以Monitor基本上是由三类结构支撑起来的，第一类是管理各种map和相关内容的PaxosService实例，第二类是Paxos实例，第三类是对k/v store的封装，即MonitorDBStore实例。
 
-#### 1.3.6.2. OSD
+#### 1.3.7.2. OSD
 OSD全称Object-based Storage Device，也就是负责响应客户端请求返回具体数据的进程。一个Ceph集群一般都有很多个OSD。  
 在启动时对 OSDMap 进行变更的情况，当一个新的 OSD 启动时，这时 Monitor 所掌握的最新 OSDMap 并没有该 OSD 的情况，因此该 OSD 会向 Monitor 申请加入，Monitor 再验证其信息后会将其加入 OSDMap 并标记为IN，并且将其放在 Pending Proposal 中会在下一次 Monitor “讨论”中提出，OSD 在得到 Monitor 的回复信息后发现自己仍然没在 OSDMap 中会继续尝试申请加入，接下来 Monitor 会发起一个 Proposal ，申请将这个 OSD 加入 OSDMap 并且标记为 UP 。然后按照 Paxos 的流程，从 proposal->accept->commit 到最后达成一致，OSD 最后成功加入 OSDMap 。当新的 OSD 获得最新 OSDMap 发现它已经在其中时。这时，OSD 才真正开始建立与其他OSD的连接，Monitor 接下来会开始给他分配PG。
 
-#### 1.3.6.3. MDS
+#### 1.3.7.3. MDS
 MDS全称Ceph Metadata Server，是CephFS服务依赖的元数据服务。  
 Ceph MDS是元数据服务器，只有Ceph文件系统（CephFS）才需要，其他存储方法不需要，如基于对象的存储不需要MDS服务。Ceph MDS作为一个守护进程运行，它允许客户端挂载一个任意大小的POSIX文件系统。MDS不直接向客户端提供任何数据，数据通过OSD服务提供。MDS提供一个带智能缓存层的共享型连续文件系统，因此可以大大减少读写操作。MDS在动态子树分区和一个MDS只负责一部分元数据等方面进一步发挥了它的好处。它在本质上就是动态的，守护进程可以加入、离开，并且快速接管出错的节点。
 
-#### 1.3.6.4. Object
+#### 1.3.7.4. Object
 Ceph最底层的存储单元是Object对象，每个Object包含元数据和原始数据。
 
-#### 1.3.6.5. PG
+#### 1.3.7.5. PG
 PG全称Placement Grouops，是一个逻辑的概念，一个PG包含多个OSD。引入PG这一层其实是为了更好的分配数据和定位数据，通过将某些东西进行逻辑归组，从而达到统一管理，提升效率的作用。  
 PG(Placement Group)是 Ceph 中非常重要的概念，它可以看成是一致性哈希中的虚拟节点，维护了一部分数据并且是数据迁移和改变的最小单位。它在 Ceph 中承担着非常重要的角色，在一个 Pool 中存在一定数量的 PG (可动态增减)，这些 PG 会被分布在多个 OSD ，分布规则可以通过 CRUSH RULE 来定义。Monitor 维护了每个Pool中的所有 PG 信息，比如当副本数是三时，这个 PG 会分布在3个 OSD 中，其中有一个 OSD 角色会是 Primary ，另外两个 OSD 的角色会是 Replicated。Primary PG负责该 PG 的对象写操作，读操作可以从 Replicated PG获得。而 OSD 则只是 PG 的载体，每个 OSD 都会有一部分 PG 角色是 Primary，另一部分是 Replicated，当 OSD 发生故障时(意外 crash 或者存储设备损坏)，Monitor 会将该 OSD 上的所有角色为 Primary 的 PG 的 Replicated 角色的 OSD 提升为 Primary PG，这个 OSD 所有的 PG 都会处于 Degraded 状态。然后等待管理员的下一步决策，所有的 Replicated 如果原来的 OSD 无法启动， OSD 会被踢出集群，这些 PG 会被 Monitor 根据 OSD 的情况分配到新的 OSD 上。
 
-#### 1.3.6.6. OSDMap
+#### 1.3.7.6. OSDMap
 OSDMap 是 Ceph 集群中所有 OSD 的信息，所有 OSD节点的改变如进程退出，节点的加入和退出或者节点权重的变化都会反映到这张 Map 上。  
 这张 Map 不仅会被 Monitor 掌握，OSD 节点和 Client 也会从 Monitor 得到这张表，因此实际上我们需要处理所有 “Client” (包括 OSD，Monitor 和 Client)的 OSDMap 持有情况，实际上，每个 “Client” 可能会具有不同版本的 OSDMap，当 Monitor 所掌握的权威 OSDMap 发生变化时，它并不会发送 OSDMap 给所有 “Client” ，而是需要了解到变化的 “Client” 会被 Push，如一个新的 OSD 加入会导致一些 PG 的迁移，那么这些 PG 的 OSD 会得到通知。除此之外，Monitor 也会随机的挑选一些 OSD 发送 OSDMap。那么如何让 OSDMap 慢慢传播呢？比如 OSD.a, OSD.b得到了新的 OSDMap，那么 OSD.c 和 OSD.d 可能部分 PG 也会在 OSD.a, OSD.b 上，这时它们的通信就会附带上 OSDMap 的 epoch，如果版本较低，OSD.c 和 OSD.d 会主动向 Monitor pull OSDMap，而部分情况 OSD.a, OSD.b 也会主动向 OSD.c 和 OSD.d push 自己的 OSDMap (如果更新)。因此，OSDMap 会在接下来一段时间内慢慢在节点间普及。在集群空闲时，很有可能需要更长的时间完成新 Map的更新，但是这并不会影响 OSD 之间的状态一致性，因为OSD没有得到新的Map所有它们不需要知晓新的OSDMap变更。
 
 
 ![](./files/17.png)
 
-#### 1.3.6.7. RADOS
+#### 1.3.7.7. RADOS
 RADOS全称Reliable 
 nomic Distributed Object Store，是Ceph集群的精华，用户实现数据分配、Failover等集群操作。
 
@@ -215,21 +215,21 @@ RADOS中的存储节点被称为OSD(object storage device)，它可以仅由很�
 通过在每个存储节点存储完整的cluster map，存储设备可以表现的半自动化，通过peer-to-peer的方式（比如定义协议）来进行数据备份、更新，错误检测、数据迁移等等操作。这无疑减轻了占少数的monitor cluster（管理节点组成的集群）的负担。
 
 ![](./files/18.png)
-#### 1.3.6.8. Libradio
+#### 1.3.7.8. Libradio
  Librados是Rados提供库，因为RADOS是协议很难直接访问，因此上层的RBD、RGW和CephFS都是通过librados访问的，目前提供PHP、Ruby、Java、Python、C和C++支持。
-#### 1.3.6.9. CRUSH
+#### 1.3.7.9. CRUSH
  CRUSH是Ceph使用的数据分布算法，类似一致性哈希，让数据分配到预期的地方。
 
 CRUSH全称Controlled Replication Under Scalable Hashing，是一种数据分发算法，类似于哈希和一致性哈希。哈希的问题在于数据增长时不能动态加Bucket，一致性哈希的问题在于增加Bucket时数据迁移量比较大，其他数据分发算法依赖中心的Metadata服务器来存储元数据效率较低，CRUSH则是通过计算、接受多维参数的来解决动态数据分发的场景。
-#### 1.3.6.10. RBD
+#### 1.3.7.10. RBD
  RBD全称RADOS block device，是Ceph对外提供的块设备服务。
-#### 1.3.6.11. RGW
+#### 1.3.7.11. RGW
  RGW全称RADOS gateway，是Ceph对外提供的对象存储服务，接口与S3和Swift兼容。
-#### 1.3.6.12. CephFS
+#### 1.3.7.12. CephFS
  CephFS全称Ceph File System，是Ceph对外提供的文件系统服务。
 
 
-### 1.3.7. 数据库
+### 1.3.8. 数据库
 数据库是有组织的数据集合，通常从计算机系统以电子方式存储和访问。在数据库比较复杂的地方，通常使用形式化设计和建模技术来开发数据库。  
 
 数据库管理系统(DBMS)是与最终用户、应用程序和数据库本身交互以捕获和分析数据的软件。DBMS软件还包含用于管理数据库的核心设施。数据库、DBMS和相关应用程序的总和可以称为“数据库系统”。通常，“数据库”一词也泛指任何DBMS、数据库系统或与数据库关联的应用程序。  
