@@ -24,9 +24,6 @@
 刘硕
 
 张铭哲
-
 ##现有的成果
-
-###[小组讨论]<https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/tree/master/discussions>
-
-###调研报告
+###[小组讨论](https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/tree/master/discussions)
+###[调研报告](https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/blob/master/docs/research.md)
