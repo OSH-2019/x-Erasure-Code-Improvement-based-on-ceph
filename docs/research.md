@@ -215,6 +215,7 @@ RADOS中的存储节点被称为OSD(object storage device)，它可以仅由很�
 通过在每个存储节点存储完整的cluster map，存储设备可以表现的半自动化，通过peer-to-peer的方式（比如定义协议）来进行数据备份、更新，错误检测、数据迁移等等操作。这无疑减轻了占少数的monitor cluster（管理节点组成的集群）的负担。
 
 ![](./files/18.png)
+
 #### 1.3.7.8. Libradio
  Librados是Rados提供库，因为RADOS是协议很难直接访问，因此上层的RBD、RGW和CephFS都是通过librados访问的，目前提供PHP、Ruby、Java、Python、C和C++支持。
 #### 1.3.7.9. CRUSH
