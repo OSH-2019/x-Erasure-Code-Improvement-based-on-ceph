@@ -195,7 +195,6 @@ LRC（Locally Repairable Codes），我理解为局部校验编码，其核心�
 #### 三种备份方式的比较
 | Backup Strategy          | Backup Basis |   Backup Speed    |     Space Taken|  Media Required for Recovery |  
 | -------- | --------------- | ------------------------- | --------- | --------- |   
-
 | Full Backup | Full Backup          | Slow | Big | Most recent backup only |
 | Differential Backup  | Full Backup    | Medium  | Big |Most recent full + most recent differential |
 | Incremental Backup	  | Last Backup of Any Type | Fast  | Small | ost recent full + all incremental since full |
