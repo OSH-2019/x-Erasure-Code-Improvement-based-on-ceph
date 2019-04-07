@@ -178,6 +178,28 @@ LRC（Locally Repairable Codes），我理解为局部校验编码，其核心�
 另外，有一点要特别注意，LRC并不是100%不丢数据的，4个块坏掉的情况下，只有86%的几率能找回数据，从可靠性排序来说，RS12+4 》 LRC12+2+2 》RS6+3。
  
 但综合来说，LRC还是很有竞争力的技术，目前，Microsoft、Google、Facebook、Amazon、淘宝（TFS）都已经在自己的产品中采用了Erasure Code，并且大多都从经典RS转向LRC。虽然具体实现，但基本原理都是LRC的组内校验+全局校验。
+### 三种的备份方式
+#### 完全备份
+完全备份需要备份文件中的所有内容，并不依赖文件的存档属性来确定备份哪些文件。
+#### 差异备份
+差异备份只备份那些自从上一次**完全备份**之后变更的数据。  
+差异备份相比于完全备份需要备份的数据更少、速度更快，但是差异备份的数据量也会随着差异备份的次数而增加，直到进行下一次完全备份。
+
+![](images/9.png)
+
+#### 增量备份
+增量备份也是只备份修改的数据，但是这些数据是相对于上一次**备份**（可以是完全备份、也可以是增量备份）而言的。
+
+![](images/10.png)
+
+#### 三种备份方式的比较
+|     | Backup Strategy          | Backup Basis |   Backup Speed    |     Space Taken|  Media Required for Recovery |  
+| -------- | --------------- | ------------------------- |    
+
+| Full Backup |Full Backup          | Slow|   Big| Most recent backup only |
+| Differential Backup  | Full Backup    |Medium  | Big |Most recent full + most recent differential|
+|Incremental Backup	  | Last Backup of Any Type | Fast  | Small|ost recent full + all incremental since full|
+
 ## 前瞻性及重要性
 ### 纠删码的重要性
 数据的爆炸式增长使得存储系统的规模不断增加，存储设备的可靠性却一直没有得到显著提高（SSD 从SLC 到MLC 和TLC 可靠性不断下降，磁盘随着单位面积写入数据更多导致可靠性无法提升），从而给数据的持久化存储带来巨大挑战。另外随着存储系统规模的增大，存储系统中的冷数据的增加将远超过热数据的增加，如何安全保存冷数据，在需要的时候能够获取冷数据也成为存储系统中的重要挑战。而纠删码对上述的问题都有较好的解决，因此在当下提及并改进纠删码的技术是有很强的实际意义的。
