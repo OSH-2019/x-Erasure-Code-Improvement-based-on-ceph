@@ -264,3 +264,5 @@ APFS，允许多个文件系统共享相同的存储区块，在无需重新分�
 [Erasure Coding（纠删码）深入分析](https://blog.csdn.net/qq_14821541/article/details/51690479)
 
 [分布式系统下的纠删码技术（一） -- Erasure Code (EC)](https://blog.csdn.net/u011026968/article/details/52295666)
+
+[基于柯西矩阵的Erasure Code技术详解](https://blog.csdn.net/med_dandelion/article/details/32714985)
