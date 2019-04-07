@@ -204,7 +204,7 @@ Google在04年发布GFS的经典论文后，09年开始开发第二代GFS（Colo
 数据恢复的网络I/O开销为：恢复任何一个数据块需要6次I/O，通过网络传输6个数据block，存储的空间冗余率 为（6+3)/6 = 1.5
 
 
-####对比表
+#### 对比表
 
 
 |     | Storage Sysyems          | Reed-Solomon codes |                
