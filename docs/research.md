@@ -193,8 +193,9 @@ LRC（Locally Repairable Codes），我理解为局部校验编码，其核心�
 ![](./images/10.png)
 
 #### 三种备份方式的比较
-| Backup Strategy          | Backup Basis |   Backup Speed    | Space Taken |  Media Required for Recovery |  
+| Backup Strategy          | Backup Basis |   Backup Speed    |     Space Taken|  Media Required for Recovery |  
 | -------- | --------------- | ------------------------- | --------- | --------- |   
+
 | Full Backup | Full Backup          | Slow | Big | Most recent backup only |
 | Differential Backup  | Full Backup    | Medium  | Big |Most recent full + most recent differential |
 | Incremental Backup	  | Last Backup of Any Type | Fast  | Small | ost recent full + all incremental since full |
@@ -202,10 +203,10 @@ LRC（Locally Repairable Codes），我理解为局部校验编码，其核心�
 ## 前瞻性及重要性
 ### 纠删码的重要性
 数据的爆炸式增长使得存储系统的规模不断增加，存储设备的可靠性却一直没有得到显著提高（SSD 从SLC 到MLC 和TLC 可靠性不断下降，磁盘随着单位面积写入数据更多导致可靠性无法提升），从而给数据的持久化存储带来巨大挑战。另外随着存储系统规模的增大，存储系统中的冷数据的增加将远超过热数据的增加，如何安全保存冷数据，在需要的时候能够获取冷数据也成为存储系统中的重要挑战。而纠删码对上述的问题都有较好的解决，因此在当下提及并改进纠删码的技术是有很强的实际意义的。
-### ceph现阶段纠删码的缺点
+### Ceph现阶段纠删码的缺点
 纠删码提高了存储容量，却降低了速度。这也是纠删码使用时的问题和我们打算做这个方面内容的原因。我们使用的方法是   
 在分块数量固定、每块512字节的存储格式上，使用柯西编解码方式，利用SIMD指令集加速数据的计算，实现类APFS以增量方式修改和写数据的功能，最后在有条件的情况下考虑文件的分布存储位置优化问题，通过冷热数据分层为其分配不同比例的数据块和校验块，实现更好的容错机制，从而达到对可用性的要求。    
-相关的内容也已经在上面已经都有所介绍和涉及，所以在这里也不再过多赘述。我们做这个的目的无疑是在ceph现有的成熟生态上的可行改进。
+相关的内容也已经在上面已经都有所介绍和涉及，所以在这里也不再过多赘述。我们做这个的目的无疑是在Ceph现有的成熟生态上的可行改进。
 ## 相关工作
 ### Google和FACEBOOK的纠删码实现
 #### FACEBOOK
