@@ -185,16 +185,16 @@ LRC（Locally Repairable Codes），我理解为局部校验编码，其核心�
 差异备份只备份那些自从上一次**完全备份**之后变更的数据。  
 差异备份相比于完全备份需要备份的数据更少、速度更快，但是差异备份的数据量也会随着差异备份的次数而增加，直到进行下一次完全备份。
 
-![](images/9.png)
+![](./images/9.png)
 
 #### 增量备份
 增量备份也是只备份修改的数据，但是这些数据是相对于上一次**备份**（可以是完全备份、也可以是增量备份）而言的。
 
-![](images/10.png)
+![](./images/10.png)
 
 #### 三种备份方式的比较
-|     | Backup Strategy          | Backup Basis |   Backup Speed    |     Space Taken|  Media Required for Recovery |  
-| -------- | --------------- | ------------------------- |    
+| Backup Strategy          | Backup Basis |   Backup Speed    |     Space Taken|  Media Required for Recovery |  
+| -------- | --------------- | ------------------------- | ---------|---------|   
 
 | Full Backup |Full Backup          | Slow|   Big| Most recent backup only |
 | Differential Backup  | Full Backup    |Medium  | Big |Most recent full + most recent differential|
