@@ -41,14 +41,8 @@
         - [增加对小文件读取的IO项目————cephfs_readline](#增加对小文件读取的io项目cephfs_readline)
             - [项目简介](#项目简介-1)
                 - [原始方案](#原始方案)
-                    - [流程图](#流程图)
-                    - [说明](#说明)
-                    - [优缺点](#优缺点)
                     - [总结](#总结)
                 - [优化方案](#优化方案)
-                    - [流程图](#流程图-1)
-                    - [说明](#说明-1)
-                    - [优缺点](#优缺点-1)
                     - [总结](#总结-1)
         - [基于上述项目，我们提出的基于Ceph的小文件处理方案](#基于上述项目我们提出的基于ceph的小文件处理方案)
             - [写小文件](#写小文件)
@@ -298,11 +292,11 @@ NVIDIA GPUs / CUDA (research)
 ### 增加对小文件读取的IO项目————cephfs_readline 
 #### 项目简介
 ##### 原始方案
-###### 流程图 
+**流程图** 
 
 ![image.png](https://upload-images.jianshu.io/upload_images/2099201-152dc1a964a7f60f.png?imageMogr2/-orient/strip%7CimageView2/2/w/1240)
 
-###### 说明
+**说明**
   - 假如用户拉取的文件大小是16M, 文件按照4M切分，散落到四个数据片上
   - 用户首先请求cephfs拉取文件信息
   -  cephfs会根据crush算法找计算文件散落到那几个数据片上
@@ -310,7 +304,6 @@ NVIDIA GPUs / CUDA (research)
   - cephfs文件拉取后返回给用户
   - 用户拉取完整个文件，开始做过滤关键字操作
   - 
-###### 优缺点
 **优点**
 - 简单方便
 - 开发成本低
@@ -324,19 +317,18 @@ NVIDIA GPUs / CUDA (research)
 用户拉取文件，必须先通过cephfs拉取文件到本地，然后根据关键字检索这行数据。如果用户检索量比较大的时候，并且文件大小都不统一，拉取文件越大网络延迟越高，并且在大文件中过滤关键字效率非常低，严重影响用户的体验。
 
 ##### 优化方案
-###### 流程图
+**流程图**
 
 ![image.png](https://upload-images.jianshu.io/upload_images/2099201-8830428557d4f17b.png?imageMogr2/
 -orient/strip%7CimageView2/2/w/1240)
 
-###### 说明
+**说明**
 - 用户发起请求输入文件名和key关键字到达索引层
 - 索引层根据key找到对应的offset信息，然后传给dss-readline
 - dss-readline根据cephfs cursh算法找到对应的object信息和offset信息
 - 根据dss-readline用户输入的offset找到对应的object块信息
 - dss-readline直接获取需要块的offset 该行的信息
 
-###### 优缺点
 **缺点**
 - 需要额外开发成本
 
