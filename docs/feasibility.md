@@ -327,8 +327,7 @@ NVIDIA GPUs / CUDA (research)
 ##### 优化方案
 **流程图**
 
-![image.png](https://upload-images.jianshu.io/upload_images/2099201-8830428557d4f17b.png?imageMogr2/
--orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/2099201-8830428557d4f17b.png?imageMogr2/-orient/strip%7CimageView2/2/w/1240)
 
 **说明**
 - 用户发起请求输入文件名和key关键字到达索引层
