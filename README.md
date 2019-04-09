@@ -30,3 +30,4 @@
 ### [小组讨论](https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/tree/master/discussions)
 
 ### [调研报告](https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/blob/master/docs/research.md)
+### [可行报告](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph-/blob/master/docs/feasibility.md)
