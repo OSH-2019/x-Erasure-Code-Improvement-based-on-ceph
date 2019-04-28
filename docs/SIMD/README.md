@@ -1,6 +1,15 @@
 # **SIMD in Ceph**
 
-[TOC]
+- [SIMD in Ceph](#SIMD in Ceph)
+    - [关于工具](#关于工具：Jerasure Version 2.0)
+    	- [简介](#简介)
+    	- [我们想做的](#我们想做的) 
+    - [4.26的工作](#4.26)
+    	- [Jerasure Libary 的组成模块及其功能](#Jerasure Libary 的组成模块) 
+    - [4.28的工作](#4.28)
+        - [纠删码编解码的原理](#纠删码编解码的原理：)
+        - [位矩阵编码原理](#位矩阵编码原理：)
+        - [使用schedule(列表)而不是位矩阵](#使用schedule(列表)而不是位矩阵)
 
 ## 关于工具：Jerasure Version 2.0
 
@@ -52,7 +61,7 @@
 
 ​	为了**解码**，我们注意到系统中的每个单词都有一个相应的分布矩阵行。当设备发生故障时，我们从分布的k行创建一个解码矩阵，该矩阵对应于非故障设备。请注意，此k行的解码矩阵乘以原始数据等于剩余的k个幸存者。如果我们对这个矩阵求逆并将其乘以等式的两边，就求出了原始数据。
 
-![](pictures/Matrix-Based Coding & Decoding.png)
+![](pictures/Matrix-Based Coding Decoding.png)
 
 ### 位矩阵编码原理：
 
