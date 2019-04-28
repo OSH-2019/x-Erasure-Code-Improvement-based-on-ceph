@@ -52,13 +52,13 @@
 
 ​	为了**解码**，我们注意到系统中的每个单词都有一个相应的分布矩阵行。当设备发生故障时，我们从分布的k行创建一个解码矩阵，该矩阵对应于非故障设备。请注意，此k行的解码矩阵乘以原始数据等于剩余的k个幸存者。如果我们对这个矩阵求逆并将其乘以等式的两边，就求出了原始数据。
 
-![](/home/lius/图片/Matrix-Based Coding & Decoding.png)
+![](pictures/Matrix-Based Coding & Decoding.png)
 
 ### 位矩阵编码原理：
 
 ​	位编码矩阵最初是在原始的Cauchy Reed-Solomon编码论文上的[BKK 95]。为了使用位矩阵进行编码和解码，我们在每个方向上将原来的分布矩阵扩展了w倍，位矩阵的分布矩阵规模是w(k + m) × wk，称为二元分布矩阵。将其乘以wk元素向量，该向量由来自k个数据设备的w位组成，如下所示：
 
-![](/home/lius/图片/bit-matrix-vector.png)
+![](pictures/bit-matrix-vector.png)
 
 ​	其中，原来的分布矩阵每一个元素现在都变成了一个w*w的方阵，D向量的每个数据块都是一个w位的向量。
 
@@ -72,9 +72,9 @@
 
 ​	其中op是操作码：0表示复制，1表示XOR，sd是源设备的id，sb是源设备的位。最后两个元素dd和db是目标设备和位。按照惯例，我们使用从0到k+m -1的整数来编号设备.用i(0<=i <k)标识数据设备Di，并且用i(k+m>i≥k)标识编码设备Ci-k。
 
-![](/home/lius/图片/BDM-Example.png)
+![](pictures/BDM-Example.png)
 
-![](/home/lius/图片/tuples.png)
+![](pictures/tuples.png)
 
 ​	上面是使用5-tuples数据结构编译如上的二元分布矩阵的示例，其中k=3,w=5。
 
