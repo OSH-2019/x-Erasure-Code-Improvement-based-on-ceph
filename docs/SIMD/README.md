@@ -87,7 +87,49 @@
 
 ​	上面是使用5-tuples数据结构编译如上的二元分布矩阵的示例，其中k=3,w=5。
 
+## 5.6
 
+### Jerasure库的第一部分：伽罗华域算法
+
+1. galois_single_multiply(int a, int b, int w)和galois_single_divide(int a, int b, int w)：
+
+   这两个算法可以执行GF(2^w)伽罗华域上的两个元素的乘法和除法。
+
+2. galois_region_xor(char *r1, char *r2, char *r3, int nbytes):
+
+   这算法执行两个字节区域的异或，并且把结果放在r3。注意r3可能等于or1或者r2，如果我们用sum替换其r1或r2. Nbytes必须是机器的字长大小的倍数。
+
+3. galois_w08_region_multiply(char *region,  int  multby,  int  nbytes,  char  *r2,  int  add):
+
+   这算法执行字节区域乘以常数在GF（2^8）域上。如果r2是空指针，那么region指针的内容被覆盖写。否则，如果add为零，乘积将被放置在r2中。 如果add非零，就用乘积和r2进行XOR。
+
+4. galois_w16_region_multiply() and galois_w32_region_multiply():
+
+   和w08类似，只是域不一样
+
+5. galois_change_technique(gf_t *gf, int w):
+
+   这算法允许从GF-Complete创建GaloisField算法的自定义实现。要做到这一点，从GF-Complete手册中看create_gf_from_argv（）或者gf_init_hard（）。这些程序允许你创建一个gf_t(这是什么，我还不太清楚)，然后使用galois_change_technique（）使用这个gf_t来让jerasure用它。
+
+6. galois_init_field() and galois init_composite_field():
+
+   这两个算法会使用GF-Complete中的参数来创建gf_t指针，但是Jerasure官方建议使create_gf_from_argv（）或者gf_init_hard（）。
+
+7. galois_get_field_ptr(int w):
+
+   对于一个特定的w值，返回一个正在被jerasure使用的gf_t指针。
+
+### Jerasure库的第二部分：核心例程
+
+1. 首先介绍一些常用于乘法程序的参数：
+   - int k： 数据设备的个数
+   - int m： 编码设备的个数
+   - int w： 编码的字长
+   - int packetsize： 每个数据包的大小，必须是sizeof（long）的整数倍
+   - int size： 每个设备的总字节数，必须是sizeof（long）的整数倍。如果一个位生成矩阵被应用，那么它的元素必须是packetsize*w的整数倍。如果想要对不符合上述条件的数据块进行编码，那么他必须补零
+   - int *matrix： 这是一个带有k * m个元素的数组，它代表编码矩阵 - 即生成矩阵的最后一行。其元素必须介于0和2w-1之间。 第i行第j列的元素就是matrix [i * k j]。
+   - int *bitmatrix： 这是构成BDM（binary distributed matrix）最后一行的w * m * w * k元素的数组。 第i行第j列的元素就是bitmatrix [i * k * w j]。、
+   - 还有一些，打算直接去读代码，再回来对着表理解
 
 
 
