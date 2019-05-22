@@ -141,7 +141,7 @@
 
 ​		使用./encoder 'input file name' k m 'encode way' bit-word_size packet_size buffer_size命令进行编码，其中k是数据块的数目，m是检验块的数目，这些数目在不同的编码方式下有不同的要求。bit-word_size是伽罗华域的w，packet_size是每个packet的大小，buffer_size是一次处理的packet的数目。编码的结果是在编码得到的数据块和检验块出现在相对路径下的Coding文件夹中，同时还有一个txt文档记录这个文件的编码信息。
 
-​		解码时只需要./deconder 'input file name'，就可以得到被编码的文件。
+​		解码时只需要./decoder 'input file name'，就可以得到被编码的文件。
 
 ### Jerasure2.0库的单独编译使用：
 
