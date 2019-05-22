@@ -131,7 +131,23 @@
    - int *bitmatrix： 这是构成BDM（binary distributed matrix）最后一行的w * m * w * k元素的数组。 第i行第j列的元素就是bitmatrix [i * k * w j]。、
    - 还有一些，打算直接去读代码，再回来对着表理解
 
+## 5.22
 
+### **Jerasure1.2库的单独编译使用：**
+
+​		今天主要是把Jerasure在ubuntu18.04系统上编译运行了一下，并将一张图片按照cauchy编码的方式编码成4个数据块和2个检验块，并随便删去两个数据块之后再解码成原来的图片。
+
+![](/pictures/screen_print0.png)
+
+​		使用./encoder 'input file name' k m 'encode way' bit-word_size packet_size buffer_size命令进行编码，其中k是数据块的数目，m是检验块的数目，这些数目在不同的编码方式下有不同的要求。bit-word_size是伽罗华域的w，packet_size是每个packet的大小，buffer_size是一次处理的packet的数目。编码的结果是在编码得到的数据块和检验块出现在相对路径下的Coding文件夹中，同时还有一个txt文档记录这个文件的编码信息。
+
+​		解码时只需要./deconder 'input file name'，就可以得到被编码的文件。
+
+### Jerasure2.0库的单独编译使用：
+
+​		由于gf-complete和jerasure2.0都需要用到autoconf工具进行编译，这里先来介绍autoconf和automake，在在这两个库里，可以看到没有makefile文件，只有configure.ac和makefile.am文件，执行autoconf可以产生configure，执行automake可以产生makefile.in文件，最后执行configure可以产生makefile，如果之前几步都没有报错，就可以执行make命令，开始编译。
+
+​		现在，我在执行automake这一步时还有报错，报错信息显示有一个文件找不到，具体原因和解决方案下次更新吧。
 
 
 
