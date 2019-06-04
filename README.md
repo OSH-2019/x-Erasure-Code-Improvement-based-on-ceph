@@ -35,6 +35,6 @@
 ### [调研报告](https://github.com/OSH-2019/x-Distributed-System-based-on-ceph/blob/master/docs/research.md)
 ### [可行报告](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph-/blob/master/docs/feasibility.md)
 
-### [SIMD]()
+### [SIMD](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/SIMD)
 ### [ceph搭建](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/ceph%20install)
 ### [编码](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/interface_plugin)
