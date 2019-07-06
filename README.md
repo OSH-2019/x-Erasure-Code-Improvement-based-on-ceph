@@ -12,6 +12,7 @@
         - [SIMD](#SIMD)
         - [编码](#编码)
         - [ectest](#ectest)
+        - [test](#test)
         
 ## 项目简介
 - 我们小组在咨询老师之后决定把分布式存储作为我们主要研究的目标，现阶段的想法可能还不是很成熟，项目简介也会持续不断更新
@@ -41,3 +42,4 @@
 ### [ceph搭建](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/ceph%20install)
 ### [编码](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/interface_plugin)
 ### [ectest](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/ceph-erasure-code-test)
+### [test]
