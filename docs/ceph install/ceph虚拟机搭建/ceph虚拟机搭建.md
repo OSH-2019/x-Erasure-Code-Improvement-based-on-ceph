@@ -52,6 +52,7 @@
 ### 第一步：增加 yum配置文件
 	sudo vim /etc/yum.repos.d/ceph.repo
 添加以下内容：
+
 	[ceph-noarch]
 	name=Ceph noarch packages
 	baseurl=http://ceph.com/rpm-firefly/el7/noarch
@@ -99,8 +100,9 @@
 ceph-deploy  install admin-node  osd client-node
 超时解决方法：
 
-	1、 每个节点执行安装ceph：yum –y install ceph
-执行yum -y install redhat-lsb #解决/etc/init.d/ceph:line 15: /lib/lsb/init-functions: No such file or directory问题
+1、 每个节点执行安装ceph：yum –y install ceph
+
+	执行yum -y install redhat-lsb #解决/etc/init.d/ceph:line 15: /lib/lsb/init-functions: No such file or directory问题
  
 第三步：初始化监控节点并收集keyring：
 
