@@ -9,7 +9,6 @@
         - [可行报告](#可行报告)
         - [SIMD](#SIMD)
         - [ceph搭建](#ceph搭建)
-        - [SIMD](#SIMD)
         - [编码](#编码)
         - [ectest](#ectest)
         - [test](#test)
