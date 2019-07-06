@@ -1,0 +1,9 @@
+[Unit]
+Description=Prometheus's ceph metrics exporter
+[Service]
+User=root
+Group=root
+ExecStart=~/go/bin/ceph_exporter
+[Install]
+WantedBy=multi-user.target
+Alias=ceph_exporter.service

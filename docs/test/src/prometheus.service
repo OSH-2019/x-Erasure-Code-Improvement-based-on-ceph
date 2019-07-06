@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus: the monitoring system
+Documentation=http://prometheus.io/docs/
+[Service]
+ExecStart=/usr/local/prometheus/prometheus \
+        --config.file=/usr/local/prometheus/prometheus.yml \
+        --storage.tsdb.path=/var/lib/prometheus \
+        --web.console.templates=/usr/local/prometheus/consoles \
+        --web.console.libraries=/usr/local/prometheus/console_libraries \
+        --web.listen-address=0.0.0.0:9090 --web.external-url=
+Restart=always
+StartLimitInterval=0
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
