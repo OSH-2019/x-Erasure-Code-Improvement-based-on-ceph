@@ -13,7 +13,7 @@
         - [ectest](#ectest)
         - [test](#test)
         - [日志](#日志)
-        
+        - [终期报告](#终期报告)
 ## 项目简介
 - 我们小组在咨询老师之后决定把分布式存储作为我们主要研究的目标，现阶段的想法可能还不是很成熟，项目简介也会持续不断更新
 ### 现有想法
@@ -44,3 +44,4 @@
 ### [ectest](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/ceph-erasure-code-test)
 ### [test](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/test)
 ### [日志](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/ceph日志)
+### [终期报告](https://github.com/OSH-2019/x-Erasure-Code-Improvement-based-on-ceph/tree/master/docs/终期报告)
